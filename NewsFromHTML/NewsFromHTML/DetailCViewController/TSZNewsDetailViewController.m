@@ -11,7 +11,7 @@
 #import "AFNetworking.h"
 #import "TSZHTTPManager.h"
 #import "TSZNewsDetailImage.h"
-
+#import "MBProgressHUD+MJ.h"
 #import "TSZNewsDetail.h"
 
 @interface TSZNewsDetailViewController () <UIWebViewDelegate>
@@ -113,6 +113,18 @@
         }
         
         //增加单击方法，使用js 代码
+        /*
+         通用url的设计
+         协议固定: hm:
+         一般有2个参数
+         1> 方法名
+         2> 方法参数 (字符串类型)
+         */
+//        NSString *onload = @"this.onclick = function() {"
+//     "window.location.href = 'tsz:call:&10086'" // 1> 打电话方法,有参数
+//        "window.location.href = 'tsz:sendMsg:&10010'" // 2> 发信息方法,有参数
+//          "window.location.href = 'tsz:shutdown'"
+//        "};"; // 3> 关机方法,无参数
         
         NSString *onload = @"this.onclick = function(){"
                         "window.location.href = 'TSZ://?"
@@ -149,7 +161,8 @@
         
         // 保存图片
         UIImage *image = [UIImage imageWithData:imageData];
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        
+        UIImageWriteToSavedPhotosAlbum(image, self , @selector(image:didFinishSavingWithError:contextInfo:), nil);
         
     }]];
     
@@ -157,6 +170,26 @@
     
     [self presentViewController:alert animated:YES completion:nil];
     
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error
+  contextInfo:(void *)contextInfo
+{
+    // Was there an error?
+    if (error != NULL)
+    {
+        // Show error message...
+        NSLog(@"---++%@" ,error);
+        
+        [MBProgressHUD showSuccess:@"保存失败!" ];
+        
+    }
+    else  // No errors
+    {
+        // Show message image successfully saved
+        NSLog(@"---%@" , contextInfo);
+        [MBProgressHUD showError:@"保存成功!" ];
+    }
 }
 
 #pragma mark: UIWebViewDelegate
