@@ -126,9 +126,9 @@
 //          "window.location.href = 'tsz:shutdown'"
 //        "};"; // 3> 关机方法,无参数
         
+        // 注意网络的网址 浏览器会自动把大写转为小写
         NSString *onload = @"this.onclick = function(){"
-                        "window.location.href = 'TSZ://?"
-                        "src='+this.src"
+                        "window.location.href = 'TSZ:saveImageToAlbum:&' + this.src"
                         "};";
         
         
@@ -193,19 +193,49 @@
 }
 
 #pragma mark: UIWebViewDelegate
+/**
+ 调用 : 每当webView发送一个请求之前都会先调用这个方法
+ request : 即将发送的请求
+ BOOL : Yes : 允许发送这个请求  No : 禁止发送这个请求
+ navigationType : 是否在新窗口中打开
+ */
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     
     NSString *url = request.URL.absoluteString;
 
-    NSRange range = [url rangeOfString:@"tsz://?src="];
+    NSRange range = [url rangeOfString:@"tsz:"];
     
     if (range.length > 0) {
         NSUInteger loc = range.location + range.length;
         
-        NSString *imgSrc = [url substringFromIndex:loc];
+        NSString *path = [url substringFromIndex:loc];
         
-        [self saveImageToAlbum:imgSrc];
+        //获得方法名
+        NSArray *methodParam = [path componentsSeparatedByString:@"&"];
         
+        //方法名
+        NSString *methodName = [methodParam firstObject];
+        //参数
+        NSString *param =  nil;
+        if (methodParam.count > 1) {
+            param = [methodParam lastObject];
+        }
+        
+        // clang 是负责编译 OC 程序的
+        // 让 clang 编译到这一行的时候压栈
+        
+#pragma clang diagnostic push  // 让 clang 忽略 -Warc-performSelector-leaks 警告信息
+        
+    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        SEL methodSel = NSSelectorFromString(methodName);
+        
+         // 判断方法的目的 : 防止因为方法不存在而报错
+        if ([self respondsToSelector:methodSel]) {
+             [self performSelector:methodSel withObject:param];
+        }
+       
+        // 让 clang 出栈
+#pragma clang diagnostic pop
         return NO;
     }
     return YES;
