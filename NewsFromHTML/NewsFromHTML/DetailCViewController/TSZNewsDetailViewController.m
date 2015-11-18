@@ -14,7 +14,7 @@
 
 #import "TSZNewsDetail.h"
 
-@interface TSZNewsDetailViewController ()
+@interface TSZNewsDetailViewController () <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
@@ -32,18 +32,22 @@
     
     self.title  = @"新闻详情";
     
+    self.webView.delegate = self;
+    
     NSString *url = [NSString stringWithFormat:@"http://c.m.163.com/nc/article/%@/full.html",self.headLine.docid];
     
     NSLog(@"%@" , url);
+    
     [[TSZHTTPManager manager] GET:url parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary * responseObject) {
         self.detail  = [TSZNewsDetail detailWithDict:responseObject[self.headLine.docid]];
         
         [self showDetailInfo];
         
     } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+        
         NSLog(@"%@" , error);
+        
     }];
-    
 }
 
 
@@ -58,6 +62,9 @@
     [html appendString:@"<html>"];
     
     [html appendString:@"<head>"];
+    
+    //导入css层叠样式表
+    [html appendFormat:@"<link rel=\"stylesheet\" href=\"%@\">" ,[[NSBundle mainBundle] URLForResource:@"TSZDetail.css" withExtension:nil]];
     
     [html appendString:@"</head>"];
     
@@ -83,23 +90,92 @@
     NSMutableString *body = [NSMutableString string];
     
     //拼接标题
-    [body appendFormat:@"<div style=\"text-align: center;\"> %@</div>",self.detail.title];
+    [body appendFormat:@"<div class=\"title\"> %@</div>",self.detail.title];
     
     //拼接时间
-    [body appendFormat:@"<div style = \"text-align: center;\">%@</div>" , self.detail.ptime];
+    [body appendFormat:@"<div class=\"time\">%@</div>" , self.detail.ptime];
     [body appendString:self.detail.body];
     
     for (TSZNewsDetailImage  *img in self.detail.img) {
         
         NSMutableString *imgHtml = [NSMutableString string];
-        [imgHtml appendString:@"<div style=\"text-align: center;\">"];
+        [imgHtml appendString:@"<div class=\"img-parent\">"];
         
-        [imgHtml appendFormat:@"<img style=\"width:100px;height:100px;\"src=\"%@\">",img.src];
+        //根据返回的图像大小 限制显示的大小
+        NSArray *pixel = [img.pixel componentsSeparatedByString:@"*"];
+        int width = [[pixel firstObject] intValue];
+        int height = [[pixel lastObject] intValue];
+        int maxWidth = [UIScreen mainScreen].bounds.size.width * 0.7;
+        
+        if (width > maxWidth) {
+            height  = height *maxWidth / width;
+            width = maxWidth;
+        }
+        
+        //增加单击方法，使用js 代码
+        
+        NSString *onload = @"this.onclick = function(){"
+                        "window.location.href = 'TSZ://?"
+                        "src='+this.src"
+                        "};";
+        
+        
+        [imgHtml appendFormat:@"<img  onload=\"%@\" width=\"%d\" height=\"%d\" src=\"%@\">",onload , width,height ,img.src];
+        
+        
+        
         [imgHtml appendString:@"</div>"];
         
         [body  replaceOccurrencesOfString:img.ref withString:imgHtml options:NSCaseInsensitiveSearch range:NSMakeRange(0, body.length)];
     }
     return body;
+}
+
+#pragma mark: 代码实现保存
+- (void)saveImageToAlbum:(NSString *)imgStr{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"友情提示" message:@"你确定要保存吗" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        
+        //保存
+        // 保存图片到相册方法二  直接从UIWebView的缓存中获取
+        // UIWebView 的缓存由 NSURLCache 来管理
+        NSURLCache *cache = [NSURLCache sharedURLCache];
+        // 从网页的缓存中取得图片
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imgStr]];
+        NSCachedURLResponse *response = [cache cachedResponseForRequest:request];
+        NSData *imageData = response.data;
+        
+        // 保存图片
+        UIImage *image = [UIImage imageWithData:imageData];
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+#pragma mark: UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    
+    NSString *url = request.URL.absoluteString;
+
+    NSRange range = [url rangeOfString:@"tsz://?src="];
+    
+    if (range.length > 0) {
+        NSUInteger loc = range.location + range.length;
+        
+        NSString *imgSrc = [url substringFromIndex:loc];
+        
+        [self saveImageToAlbum:imgSrc];
+        
+        return NO;
+    }
+    return YES;
 }
 
 //set方法
