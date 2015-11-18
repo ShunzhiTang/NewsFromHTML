@@ -18,6 +18,12 @@
 /** 图片 */
 @property (nonatomic , copy) NSString *imgsrc;
 
+@property (nonatomic , copy) NSString *url;
+/** 新闻url */
+@property (nonatomic , copy) NSString *url_3w;
+/** 新闻id */
+@property (nonatomic , copy) NSString *docid;
+
 + (instancetype)headlineWithDict:(NSDictionary *)dict;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;

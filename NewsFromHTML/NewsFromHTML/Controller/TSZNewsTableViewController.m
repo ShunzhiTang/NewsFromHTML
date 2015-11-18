@@ -8,6 +8,8 @@
 #import "TSZHTTPManager.h"
 #import "TSZHeadline.h"
 #import "UIImageView+WebCache.h"
+#import "MJExtension.h"
+#import "TSZNewsDetailViewController.h"
 
 @interface TSZNewsTableViewController ()
 
@@ -18,18 +20,20 @@
 @implementation TSZNewsTableViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
    
-    self.title = @"新闻";
+    self.title = @"头条新闻";
+    
     [self getNewsContents];
     
-    self.tableView.rowHeight = 70;
+    self.tableView.rowHeight = 80;
     
 }
 
 #pragma mark: 获取数据资源
 - (void)getNewsContents{
-    
+
     TSZHTTPManager *manager = [TSZHTTPManager manager];
     
     //配置iOS7旧系统
@@ -37,16 +41,12 @@
         
         //获取新闻字典
         NSArray *dictArray = responseObject[@"T1348647853363"];
-        //新建模型对象
-        NSMutableArray *headlines = [NSMutableArray array];
-        for (NSDictionary  *dict  in dictArray) {
-            
-            TSZHeadline *headModel = [TSZHeadline headlineWithDict:dict];
-            
-            [headlines addObject:headModel];
-        }
         
-        self.newsArray = headlines;
+//        [dictArray writeToFile:@"/Users/tang/Desktop/news.txt" atomically:YES];
+        NSLog(@"%@" , responseObject);
+        
+        
+        _newsArray = [TSZHeadline objectArrayWithKeyValuesArray:dictArray];
         
         [self.tableView reloadData];
         
@@ -58,7 +58,7 @@
 
 #pragma mark: 实现TableView的代理方法
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.newsArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -67,12 +67,31 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
     
     TSZHeadline *headline = self.newsArray[indexPath.row];
+    
     cell.textLabel.text = headline.title;
     cell.detailTextLabel.text = headline.digest;
     
     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:headline.imgsrc]placeholderImage:[UIImage imageNamed:@"loading"]];
      
     return cell;
+}
+
+#pragma mark: 点击cell传入跳转
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    //赋值
+    TSZNewsDetailViewController *detailVc =[[TSZNewsDetailViewController alloc] init] ;
+//    detailVc.headLine = self.newsArray[0];
+    [self presentViewController:detailVc animated:YES completion:nil];
+}
+
+// 准备跳转界面
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    NSUInteger row = self.tableView.indexPathForSelectedRow.row;
+    TSZNewsDetailViewController *detailVc = segue.destinationViewController;
+    detailVc.headLine = self.newsArray[row];
+    
 }
 
 @end

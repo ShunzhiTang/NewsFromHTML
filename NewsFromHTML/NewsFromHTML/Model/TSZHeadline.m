@@ -18,6 +18,7 @@
 - (instancetype)initWithDict:(NSDictionary *)dict{
     
     if (self = [super init]) {
+        
 //        self.title = dict[@"title"];
 //        self.digest = dict[@"digest"];
 //        self.imgsrc = dict[@"imgsrc"];
@@ -26,10 +27,13 @@
         // cocoa 的大招，允许间接修改对象的属性值
         // 第一个参数是字典的数值
         // 第二个参数是类的属性
-        
+
         [self setValue:dict[@"title"] forKey:@"title"];
         [self setValue:dict[@"digest"] forKey:@"digest"];
         [self setValue:dict[@"imgsrc"] forKey:@"imgsrc"];
+        [self setValue:dict[@"url"] forKey:@"url"];
+        [self setValue:dict[@"url_3w"] forKey:@"url_3w"];
+        
     }
     return self;
 }
