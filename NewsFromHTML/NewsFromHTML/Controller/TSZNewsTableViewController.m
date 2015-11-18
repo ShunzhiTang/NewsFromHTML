@@ -42,10 +42,6 @@
         //获取新闻字典
         NSArray *dictArray = responseObject[@"T1348647853363"];
         
-//        [dictArray writeToFile:@"/Users/tang/Desktop/news.txt" atomically:YES];
-        NSLog(@"%@" , responseObject);
-        
-        
         _newsArray = [TSZHeadline objectArrayWithKeyValuesArray:dictArray];
         
         [self.tableView reloadData];
@@ -62,7 +58,6 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     //1、获取cell
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NewsCell"];
     
@@ -91,7 +86,6 @@
     NSUInteger row = self.tableView.indexPathForSelectedRow.row;
     TSZNewsDetailViewController *detailVc = segue.destinationViewController;
     detailVc.headLine = self.newsArray[row];
-    
 }
 
 @end
