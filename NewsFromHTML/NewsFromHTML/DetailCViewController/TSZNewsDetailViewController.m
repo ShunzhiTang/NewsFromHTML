@@ -13,6 +13,7 @@
 #import "TSZNewsDetailImage.h"
 #import "MBProgressHUD+MJ.h"
 #import "TSZNewsDetail.h"
+#import "TSZStatusBarHUD.h"
 
 @interface TSZNewsDetailViewController () <UIWebViewDelegate>
 
@@ -175,20 +176,19 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error
   contextInfo:(void *)contextInfo
 {
-    // Was there an error?
     if (error != NULL)
     {
-        // Show error message...
-        NSLog(@"---++%@" ,error);
         
-        [MBProgressHUD showSuccess:@"保存失败!" ];
+//        [MBProgressHUD showSuccess:@"保存失败!" ];
+        [TSZStatusBarHUD showSuccess:@"保存失败"];
         
     }
-    else  // No errors
+    else
     {
-        // Show message image successfully saved
-        NSLog(@"---%@" , contextInfo);
-        [MBProgressHUD showError:@"保存成功!" ];
+//        [MBProgressHUD showError:@"保存成功!" ];
+        [TSZStatusBarHUD showError:@"保存成功"];
+        //模拟下载
+//        [TSZStatusBarHUD showLoading:@"大爷正在加载别催..."];
     }
 }
 

@@ -55,6 +55,8 @@
 		249C25BB1BFB0ECF002754FB /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C25B01BFB0ECF002754FB /* AFURLRequestSerialization.m */; settings = {ASSET_TAGS = (); }; };
 		249C25BC1BFB0ECF002754FB /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C25B21BFB0ECF002754FB /* AFURLResponseSerialization.m */; settings = {ASSET_TAGS = (); }; };
 		249C25BD1BFB0ECF002754FB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C25B41BFB0ECF002754FB /* AFURLSessionManager.m */; settings = {ASSET_TAGS = (); }; };
+		24E6FAFF1BFEBE7D00F89855 /* TSZStatusBarHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E6FAFE1BFEBE7D00F89855 /* TSZStatusBarHUD.m */; settings = {ASSET_TAGS = (); }; };
+		24E6FB011BFEC41500F89855 /* TSZStatusBarHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24E6FB001BFEC41500F89855 /* TSZStatusBarHUD.bundle */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +154,9 @@
 		249C25B21BFB0ECF002754FB /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		249C25B31BFB0ECF002754FB /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		249C25B41BFB0ECF002754FB /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		24E6FAFD1BFEBE7D00F89855 /* TSZStatusBarHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSZStatusBarHUD.h; sourceTree = "<group>"; };
+		24E6FAFE1BFEBE7D00F89855 /* TSZStatusBarHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSZStatusBarHUD.m; sourceTree = "<group>"; };
+		24E6FB001BFEC41500F89855 /* TSZStatusBarHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TSZStatusBarHUD.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,13 +188,13 @@
 				24806FBE1BFCF241007DE4F7 /* MBProgressHUD.h */,
 				24806FBF1BFCF241007DE4F7 /* MBProgressHUD.m */,
 			);
-			path = MBProgressHUD;
+			name = MBProgressHUD;
+			path = ../../MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		249B76EC1BFAA1D7003944A9 = {
 			isa = PBXGroup;
 			children = (
-				24806FBA1BFCF241007DE4F7 /* MBProgressHUD */,
 				249B76F71BFAA1D7003944A9 /* NewsFromHTML */,
 				249B76F61BFAA1D7003944A9 /* Products */,
 			);
@@ -275,6 +280,8 @@
 		249C253A1BFB0D11002754FB /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				24806FBA1BFCF241007DE4F7 /* MBProgressHUD */,
+				24E6FAFC1BFEBBF300F89855 /* TSZStatusBarHUD */,
 				249C258A1BFB0D30002754FB /* MJExtension */,
 				249C25581BFB0D26002754FB /* SDWebImage */,
 			);
@@ -369,6 +376,16 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		24E6FAFC1BFEBBF300F89855 /* TSZStatusBarHUD */ = {
+			isa = PBXGroup;
+			children = (
+				24E6FB001BFEC41500F89855 /* TSZStatusBarHUD.bundle */,
+				24E6FAFD1BFEBE7D00F89855 /* TSZStatusBarHUD.h */,
+				24E6FAFE1BFEBE7D00F89855 /* TSZStatusBarHUD.m */,
+			);
+			path = TSZStatusBarHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -433,6 +450,7 @@
 				2481B19B1BFC648D00448BFE /* TSZDetail.css in Resources */,
 				249B77051BFAA1D7003944A9 /* Assets.xcassets in Resources */,
 				249B77031BFAA1D7003944A9 /* Main.storyboard in Resources */,
+				24E6FB011BFEC41500F89855 /* TSZStatusBarHUD.bundle in Resources */,
 				24806FC11BFCF241007DE4F7 /* MBProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,6 +462,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24E6FAFF1BFEBE7D00F89855 /* TSZStatusBarHUD.m in Sources */,
 				249C25B51BFB0ECF002754FB /* AFHTTPRequestOperation.m in Sources */,
 				249C259F1BFB0D30002754FB /* NSObject+MJIvar.m in Sources */,
 				249C25331BFB024F002754FB /* TSZNewsTableViewController.m in Sources */,
