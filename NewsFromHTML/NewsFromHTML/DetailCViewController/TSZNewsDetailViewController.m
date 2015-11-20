@@ -179,14 +179,11 @@
     if (error != NULL)
     {
         
-//        [MBProgressHUD showSuccess:@"保存失败!" ];
-        [TSZStatusBarHUD showSuccess:@"保存失败"];
-        
+        [TSZStatusBarHUD showError:@"保存失败"];
     }
     else
     {
-//        [MBProgressHUD showError:@"保存成功!" ];
-        [TSZStatusBarHUD showError:@"保存成功"];
+        [TSZStatusBarHUD showSuccess:@"保存成功"];
         //模拟下载
 //        [TSZStatusBarHUD showLoading:@"大爷正在加载别催..."];
     }

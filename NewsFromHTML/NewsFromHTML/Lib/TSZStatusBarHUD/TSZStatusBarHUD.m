@@ -11,12 +11,26 @@
 @implementation TSZStatusBarHUD
 
 UIWindow *_window;
+
+
+
 // 窗口的高度
-#define TSZWindowHeight 20
+//#define TSZWindowHeight 20
 // 动画的执行时间
-#define TSZDuration 0.5
+//#define TSZDuration 0.5
 // 窗口的停留时间
-#define TSZDelay 1.5
+//#define TSZDelay 1.5
+
+//  一般在开发中可以把宏定义使用一个静态的全局变量去 定义 ， 安全 优化
+
+//static const CGFloat TSZWindowHeight = 20; // 为什么会报错 因为因如来一个外部的 全局变量
+
+static const CGFloat TSZDuration  = 1.0;
+
+static const CGFloat  TSZDelay = 2.0;
+
+
+
 // 字体大小
 #define TSZFont [UIFont systemFontOfSize:12]
 
@@ -104,7 +118,7 @@ UIWindow *_window;
 ///Users/tang/Desktop/iOS代码/HTML和OC的结合/oc和js实现新闻预览/NewsFromHTML/NewsFromHTML/NewsFromHTML/Lib/TSZStatusBarHUD/HMStatusBarHUD.bundle/success@2x.png
 + (void)showError:(NSString *)msg
 {
-    [self showMessage:msg imageName:@"/TSZStatusBarHUD.bundle/error.png"];
+    [self showMessage:msg imageName:@"TSZStatusBarHUD.bundle/error.png"];
     
 }
 

@@ -57,6 +57,7 @@
 		249C25BD1BFB0ECF002754FB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C25B41BFB0ECF002754FB /* AFURLSessionManager.m */; settings = {ASSET_TAGS = (); }; };
 		24E6FAFF1BFEBE7D00F89855 /* TSZStatusBarHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E6FAFE1BFEBE7D00F89855 /* TSZStatusBarHUD.m */; settings = {ASSET_TAGS = (); }; };
 		24E6FB011BFEC41500F89855 /* TSZStatusBarHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24E6FB001BFEC41500F89855 /* TSZStatusBarHUD.bundle */; settings = {ASSET_TAGS = (); }; };
+		24E6FB041BFECC7B00F89855 /* TSZConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E6FB031BFECC7B00F89855 /* TSZConst.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -157,6 +158,9 @@
 		24E6FAFD1BFEBE7D00F89855 /* TSZStatusBarHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSZStatusBarHUD.h; sourceTree = "<group>"; };
 		24E6FAFE1BFEBE7D00F89855 /* TSZStatusBarHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSZStatusBarHUD.m; sourceTree = "<group>"; };
 		24E6FB001BFEC41500F89855 /* TSZStatusBarHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TSZStatusBarHUD.bundle; sourceTree = "<group>"; };
+		24E6FB021BFECC7B00F89855 /* TSZConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSZConst.h; path = ../Lib/TSZStatusBarHUD/TSZConst.h; sourceTree = "<group>"; };
+		24E6FB031BFECC7B00F89855 /* TSZConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSZConst.m; path = ../Lib/TSZStatusBarHUD/TSZConst.m; sourceTree = "<group>"; };
+		24E6FB051BFED74B00F89855 /* TSZPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSZPrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,8 +275,11 @@
 		249C25361BFB026C002754FB /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				24E6FB021BFECC7B00F89855 /* TSZConst.h */,
+				24E6FB031BFECC7B00F89855 /* TSZConst.m */,
 				249C25371BFB026C002754FB /* AppDelegate.h */,
 				249C25381BFB026C002754FB /* AppDelegate.m */,
+				24E6FB051BFED74B00F89855 /* TSZPrefixHeader.pch */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -471,6 +478,7 @@
 				249C259B1BFB0D30002754FB /* MJFoundation.m in Sources */,
 				249C25B71BFB0ECF002754FB /* AFHTTPSessionManager.m in Sources */,
 				249C25831BFB0D26002754FB /* UIButton+WebCache.m in Sources */,
+				24E6FB041BFECC7B00F89855 /* TSZConst.m in Sources */,
 				24806FC01BFCF241007DE4F7 /* MBProgressHUD+MJ.m in Sources */,
 				249C25801BFB0D26002754FB /* SDWebImageDownloaderOperation.m in Sources */,
 				247FC4071BFBF40700B06C38 /* TSZHeadline.m in Sources */,
@@ -616,6 +624,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = $SRCROOT/NewsFromHTML/Other/TSZPrefixHeader.pch;
 				INFOPLIST_FILE = NewsFromHTML/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tsz.NewsFromHTML;
@@ -627,6 +636,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = $SRCROOT/NewsFromHTML/Other/TSZPrefixHeader.pch;
 				INFOPLIST_FILE = NewsFromHTML/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tsz.NewsFromHTML;
